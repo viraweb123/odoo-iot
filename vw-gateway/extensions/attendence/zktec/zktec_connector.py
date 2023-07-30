@@ -58,7 +58,7 @@ def convert_to_company_id(magic_number, user_id_device):
     return (magic_number << 9) ^ user_id_device
 
 def equal_packet(packet_send, packet_save):
-    if len(packet_send["telemetry"]) == 0 and packet_save["attributes"] == packet_send["attributes"]:
+    if len(packet_send["telemetry"]) != 0 or packet_save["attributes"] != packet_send["attributes"]:
         return True
                 
 class ZktecPro(Connector, Thread):
@@ -309,13 +309,11 @@ class ZktecPro(Connector, Thread):
                 # Check telemetry is empty and Repetitive attributes
                 
                 if equal_packet(self.result_dict,PACKET_SAVE):
-                    pass
-                
-                if attendance:
-                    self.gateway.send_to_storage(self.get_name(), self.result_dict)
-                    lastdatetime = attendance.timestamp
-                    with open(path, 'w') as f:
-                        f.write(str(lastdatetime))
+                    if attendance:
+                        self.gateway.send_to_storage(self.get_name(), self.result_dict)
+                        lastdatetime = attendance.timestamp
+                        with open(path, 'w') as f:
+                            f.write(str(lastdatetime))
                                 
                     PACKET_SAVE["attributes"] = self.result_dict["attributes"]
             except Exception as ex:
