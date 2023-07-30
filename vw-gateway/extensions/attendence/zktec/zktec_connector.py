@@ -308,15 +308,15 @@ class ZktecPro(Connector, Thread):
                 # Send result to thingsboard
                 # Check telemetry is empty and Repetitive attributes
                 
-                if equal_packet(self.result_dict,PACKET_SAVE):
-                    logging.info("send data")
-                    if attendance:
-                        self.gateway.send_to_storage(self.get_name(), self.result_dict)
-                        lastdatetime = attendance.timestamp
-                        with open(path, 'w') as f:
-                            f.write(str(lastdatetime))
+                #if equal_packet(self.result_dict,PACKET_SAVE):
+                    #logging.info("send data")
+                    #if attendance:
+                    self.gateway.send_to_storage(self.get_name(), self.result_dict)
+                    lastdatetime = attendance.timestamp
+                    with open(path, 'w') as f:
+                        f.write(str(lastdatetime))
                                 
-                    PACKET_SAVE["attributes"] = self.result_dict["attributes"]
+                    #PACKET_SAVE["attributes"] = self.result_dict["attributes"]
             except Exception as ex:
                 logging.error('ZKTec unsupported exception happend: %s', ex)
                 self.result_dict['attributes'].append({"ZKTec Error": True})
