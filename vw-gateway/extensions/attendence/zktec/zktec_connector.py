@@ -309,6 +309,7 @@ class ZktecPro(Connector, Thread):
                 # Check telemetry is empty and Repetitive attributes
                 
                 if equal_packet(self.result_dict,PACKET_SAVE):
+                    logging.info("send data")
                     if attendance:
                         self.gateway.send_to_storage(self.get_name(), self.result_dict)
                         lastdatetime = attendance.timestamp
