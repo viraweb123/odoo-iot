@@ -4,6 +4,7 @@ from thingsboard_gateway.tb_utility.tb_loader import TBModuleLoader
 import argparse
 import os.path
 from pyfiglet import Figlet
+import pkg_resources
 
 # "/home/sanaz/viraweb123/odoo-iot/vw-gateway/extensions"
 
@@ -38,6 +39,7 @@ args = parser.parse_args()
 f = Figlet(font='big')
 print (f.renderText('ViraWeb123')) 
 
+print("Thingsboard Gateway Package Version is :" + pkg_resources.get_distribution("thingsboard-gateway").version)
 
 TBModuleLoader.PATHS.append(args.extension)
 
