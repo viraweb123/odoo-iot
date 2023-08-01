@@ -3,6 +3,7 @@ import os
 from threading import Thread
 import traceback
 from thingsboard_gateway.connectors.connector import Connector, log
+from thingsboard_gateway.gateway.constant_enums import DownlinkMessageType, Status
 from pathlib import Path
 from zk import ZK, const
 from zk.exception import ZKErrorResponse, ZKNetworkError
@@ -58,7 +59,7 @@ def convert_to_company_id(magic_number, user_id_device):
     return (magic_number << 9) ^ user_id_device
 
 def equal_packet(packet_send, packet_save):
-    if len(packet_send["telemetry"]) != 0 or packet_save["attributes"] != packet_send["attributes"]:
+    if len(packet_send["telemetry"]) == 0 and packet_save["attributes"] == packet_send["attributes"]:
         return True
                 
 class ZktecPro(Connector, Thread):
@@ -308,15 +309,17 @@ class ZktecPro(Connector, Thread):
                 # Send result to thingsboard
                 # Check telemetry is empty and Repetitive attributes
                 
-                #if equal_packet(self.result_dict,PACKET_SAVE):
-                    #logging.info("send data")
-                    #if attendance:
-                    self.gateway.send_to_storage(self.get_name(), self.result_dict)
-                    lastdatetime = attendance.timestamp
-                    with open(path, 'w') as f:
-                        f.write(str(lastdatetime))
+                if equal_packet(self.result_dict,PACKET_SAVE):
+                    pass
+                
+                # Check Successful Send
+                elif self.gateway.send_to_storage(self.get_name(), self.result_dict) == Status.SUCCESS: 
+                    if attendance:
+                        lastdatetime = attendance.timestamp
+                        with open(path, 'w') as f:
+                            f.write(str(lastdatetime))
                                 
-                    #PACKET_SAVE["attributes"] = self.result_dict["attributes"]
+                    PACKET_SAVE["attributes"] = self.result_dict["attributes"]
             except Exception as ex:
                 logging.error('ZKTec unsupported exception happend: %s', ex)
                 self.result_dict['attributes'].append({"ZKTec Error": True})
