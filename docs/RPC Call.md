@@ -252,7 +252,7 @@ def update_fingerprint(self, params):
   "method": "print_file",
 
   "params": {
-    "contetn" :  base 64 image,
+    "content" :  base 64 image,
     "suffix_file_name": ".jpg"
   }
 }
