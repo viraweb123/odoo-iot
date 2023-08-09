@@ -12,14 +12,13 @@ import pkg_resources
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
         parser.error("The file %s does not exist! Use the --help flag for input options." % arg)
-    else:
-        return arg  # return an open file handle
+    return arg
     
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--config",
                     help='Path To config.yaml',
-                    default = './conf.yaml',
+                    default = False,
                     required=True,
                     type=lambda x: is_valid_file(parser, x)
                     ) 
@@ -32,28 +31,25 @@ parser.add_argument("--extension",
                     ) 
 
 parser.add_argument("--version",
-                    help='The program version is 1.0.0',
+                    help='The program version is {}'.format(pkg_resources.get_distribution("thingsboard-gateway").version),
                     ) 
 
 args = parser.parse_args()  
 
-f = Figlet(font='big')
-print (f.renderText('ViraWeb123')) 
+print("""
+{logo}
+---------------------------
+Thingsboard Gateway
+version     : {version}
+extensions  : {extensions_path}
+config      : {config_path} 
+""".format(
+    logo=Figlet(font='big').renderText('ViraWeb123'), 
+    version=pkg_resources.get_distribution("thingsboard-gateway").version,
+    extensions_path= args.extension,
+    config_path= args.config
+))
 
-print("Thingsboard Gateway Package Version is :" + pkg_resources.get_distribution("thingsboard-gateway").version)
 
 TBModuleLoader.PATHS.append(args.extension)
-
 TBGatewayService(args.config)
-
-
-#TBModuleLoader.PATHS.append("/home/sanaz/viraweb123/odoo-iot/vw-gateway/extensions")
-
-#TBGatewayService("/home/sanaz/viraweb123/odoo-iot/vw-gateway/ubuntu/configs/conf.yaml")
-
-
-#  viraweb123/odoo-iot/vw-gateway                  $ python main.py --config ../configs/conf.yaml    
-
-# python ../viraweb123/odoo-iot/vw-gateway/main.py --config ../tools/configs/conf.yaml --extension ../Videos/extensions
-
-#TBGatewayService('../configs/conf.yaml')

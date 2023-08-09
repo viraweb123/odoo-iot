@@ -71,6 +71,9 @@ class CUPSPro(Connector, Thread):
     def get_name(self):
         return self.name
 
+    def get_config(self):
+        return self.config
+    
     def is_connected(self):
         return self.connection 
     
