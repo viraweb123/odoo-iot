@@ -56,6 +56,8 @@ def convert_to_company_id(magic_number, user_id_device):
 def not_equal_packet(packet_send, packet_save):
     if len(packet_send["telemetry"]) != 0 or packet_save["attributes"] != packet_send["attributes"]:
         return True
+    else:
+        return False
 
 
               
