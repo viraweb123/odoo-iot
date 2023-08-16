@@ -1,6 +1,10 @@
 {
-  "Shiraz Startup ZKTec Device -Factory -2679810524082": [
-    "Shiraz Startup Factory ZKTec Device",
-    "Attendance"
+  "OSCAR_MetaPrint_IIIZ": [
+    "cups",
+    "Printer"
+  ],
+  "SII_RP-D10": [
+    "cups",
+    "Printer"
   ]
 }

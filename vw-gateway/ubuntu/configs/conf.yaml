@@ -1,5 +1,5 @@
 thingsboard:
-  host: iot.yuccasoft.com
+  host: iot.yuccasoft.com.
   port: 1883
   remoteShell: true
   remoteConfiguration: false
@@ -41,18 +41,11 @@ grpc:
   minTimeBetweenPingsMs: 10000
   minPingIntervalWithoutDataMs: 5000
 connectors:
-  
- -
-    name: ZKTec Factory #name - connector name
-    type: attendence/zktec #type - folder name in extensions, with connector file configuration 
-    configuration: json_files/zktec.json
-    class: ZktecPro
-
-  # -
-  #  name: cups #name - connector name
-  #  type: printer/cups #type - folder name in extensions, with connector file configuration 
-  #  configuration: json_files/cups.json
-  #  class: CUPSPro
+  -
+    name: cups #name - connector name
+    type: printer/cups #type - folder name in extensions, with connector file configuration 
+    configuration: json_files/cups.json
+    class: CUPSPro
 
    #-
    # name: MQTT Broker Connector

@@ -308,12 +308,12 @@ class ZktecPro(Connector, Thread):
                 # Check Successful Send
                 if attendance:
                     if not_equal_packet(self.result_dict,PACKET_SAVE): 
-                            if self.gateway.send_to_storage(self.get_name(), self.result_dict) == Status.SUCCESS: 
-                                lastdatetime = attendance.timestamp
-                                with open(path, 'w') as f:
-                                    f.write(str(lastdatetime))        
-                                PACKET_SAVE["attributes"] = self.result_dict["attributes"]
-                                    
+                        if self.gateway.send_to_storage(self.get_name(), self.result_dict) == Status.SUCCESS: 
+                            lastdatetime = attendance.timestamp
+                            with open(path, 'w') as f:
+                                f.write(str(lastdatetime))        
+                            PACKET_SAVE["attributes"] = self.result_dict["attributes"]
+                                
             except Exception as ex:
                 logging.error('ZKTec unsupported exception happend: %s', ex)
                 
