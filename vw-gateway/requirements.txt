@@ -3,3 +3,5 @@ pyzk==0.9
 pytz==2023.3
 pyfiglet==0.8.post1
 thingsboard-gateway==3.3
+schema==0.7.5
+protobuf==3.20

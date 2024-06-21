@@ -1,17 +1,10 @@
 [Unit]
 Description=My test service
 After=multi-user.target
-
 [Service]
 Type=simple
 Restart=always
-ExecStart=/root/bin/vw-gateway.sh
-
+WorkingDirectory=/root/.vw-gateway
+ExecStart=/usr/bin/python3 "/root/git/odoo-iot/vw-gateway/main.py" --extension "/root/git/odoo-iot/vw-gateway/extensions"  --config "/root/.vw-gateway/conf.yaml"
 [Install]
 WantedBy=multi-user.target
-
-
-
-
-
-

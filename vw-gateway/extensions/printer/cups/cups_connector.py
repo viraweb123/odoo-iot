@@ -13,6 +13,16 @@ import tempfile
 
 sem = threading.Semaphore(1)
 
+PACKET_SAVE ={'attributes': [],
+                'telemetry': []}
+
+
+def equal_packet(packet_send, packet_save):
+    if packet_save["telemetry"] == packet_send["telemetry"] and packet_save["attributes"] == packet_send["attributes"]:
+        return True
+    else:
+        return False
+      
 class CUPSPro(Connector, Thread): 
     # TODO : IPPError, HTTPEttor, check try except
     
@@ -120,13 +130,6 @@ class CUPSPro(Connector, Thread):
                         'attributes': [],
                         'telemetry': [],
                     }
-                
-                    #result = {
-                    #    'deviceName': self.__prefix + key,
-                    #    'deviceType': self.__deviceType,
-                    #    'attributes': [],
-                    #    'telemetry': [],
-                    #} 
                     
                     # Send attribute 
                     for attribute_key in ['printer-is-shared', 'printer-state', 'printer-state-message', 'printer-state-reasons', 'printer-type',
@@ -141,14 +144,17 @@ class CUPSPro(Connector, Thread):
                         key_counter: value_counter[key]
                     })
 
-                    # Send result to thingsboard
-                    self.gateway.send_to_storage(self.get_name(), self.result_dict)
-    
+                    if not equal_packet(self.result_dict,PACKET_SAVE):
+                        # Send result to thingsboard
+                        self.gateway.send_to_storage(self.get_name(), self.result_dict)
+                        PACKET_SAVE["attributes"] = self.result_dict["attributes"]
+                        PACKET_SAVE["telemetry"] = self.result_dict["telemetry"]
+                        
             except:
                 logging.error("Printer Not Connected")
-                self.result_dict['attributes'].append({"Printer Error" : True})
+                
             
-            time.sleep(5)
+            time.sleep(30)
     
     def close(self):
         #printer_names = self.connection.printers.keys()

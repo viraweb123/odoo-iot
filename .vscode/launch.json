@@ -8,10 +8,18 @@
             "name": "TB Gateway",
             "type": "python",
             "request": "launch",
-            "program": "/home/sanaz/viraweb123/odoo-iot/vw-gateway/main.py",
+            "program": "C:\\odoo-iot\\vw-gateway\\main.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--config","ubuntu/configs/conf.yaml", "--extension","./extensions"],
+            "args": ["--config","C:\\odoo-iot\\vw-gateway\\ubuntu\\configs\\conf.json", "--extension","C:\\odoo-iot\\vw-gateway\\extensions"],
+            "cwd": "C:\\odoo-iot\\vw-gateway"
+        },{
+            "name": "Test",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/sanaz/viraweb123/odoo-iot/vw-gateway/tests",
+            "console": "integratedTerminal",
+            "justMyCode": false,
             "cwd": "/home/sanaz/viraweb123/odoo-iot/vw-gateway"
         }
     ]
